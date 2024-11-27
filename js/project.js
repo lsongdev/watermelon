@@ -1105,7 +1105,7 @@ window.__require = function e(t, n, o) {
       m = function (e) {
         function t() {
           var t = null !== e && e.apply(this, arguments) || this;
-          // return t.bgLayer = null, t.bgCamera = null, t.mainCamera = null, t.fruitNode = null, t.lineNode = null, t.bazieffect = null, t.downEffect = null, t.fruitPre = null, t.fruitS = [], t.step = 0, t.guideTime = 0, t.targetFruit = null, t.fruitHeigth = -1200, t.endOne = 0, t
+          return t.bgLayer = null, t.bgCamera = null, t.mainCamera = null, t.fruitNode = null, t.lineNode = null, t.bazieffect = null, t.downEffect = null, t.fruitPre = null, t.fruitS = [], t.step = 0, t.guideTime = 0, t.targetFruit = null, t.fruitHeigth = -1200, t.endOne = 0, t
         }
         var n;
         return o(t, e), n = t, t.prototype.onLoad = function () {
@@ -1411,65 +1411,47 @@ window.__require = function e(t, n, o) {
         method: "get",
         perform: null,
         retGameId: 0
-      }, "cacheList", []), c(o, "ctor", function () { }), c(o, "checkHave", function () {
-        this.isBusy || this.sendOne()
-      }), c(o, "httpInitUrl", function (e) {
-        console.log("data", this.URL), this.retGameId = e
-      }), c(o, "send", function (e, t, n, o) {
-        this.cacheList.push({
-          type: e,
-          data: t,
-          func: n,
-          target: o
-        }), this.isBusy || this.sendOne()
-      }), c(o, "sendOne", function () {
-        if (0 != this.cacheList.length) {
-          this.isBusy = !0, this.perform = this.cacheList.shift(), this.req = cc.loader.getXMLHttpRequest(), this.req.onreadystatechange = this.onDataHandler.bind(this), this.req.onerror = this.onErrorHandler.bind(this), this.req.ontimeout = this.onTimeoutHandler.bind(this), this.req.timeout = 2e3, cc.log("pos", this.URL), this.req.open("GET", this.URL), this.req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
-          var e = this.returnLanguage();
-          console.log("gameIdid", this.retGameId);
-          var t = this.retGameId,
-            n = {
-              type: this.perform.type,
-              gid: t,
-              mid: null,
-              data: this.perform.data,
-              languageType: e
-            },
-            o = "send=" + JSON.stringify(n);
-          this.req.send(o)
-        }
-      }), c(o, "onDataHandler", function () {
-        if (404 != this.req.status) {
-          if (4 == this.req.readyState && this.req.status >= 200 && this.req.status <= 207 && this.req.responseText) {
-            var e = JSON.parse(this.req.responseText);
-            this.isBusy = !1, this.perform.target ? this.perform.func.call(this.perform.target, e.error, e.data, e.commendGame, e.gameInfo) : this.perform.func(e)
-          }
-        } else {
-          var t = a.launchScene,
-            n = a.Bros;
-          a.caS;
+      }, "cacheList", []),
+        c(o, "ctor", function () { }), c(o, "checkHave", function () {
+          this.isBusy || this.sendOne()
+        }), c(o, "httpInitUrl", function (e) {
+          this.retGameId = e
+        }),
+        c(o, "send", function (e, t, n, o) {
+          this.cacheList.push({
+            type: e,
+            data: t,
+            func: n,
+            target: o
+          }), this.isBusy || this.sendOne()
+        }),
+        c(o, "sendOne", function () {
+          var t = a.launchScene, n = a.Bros;
           cc.director.loadScene(t, null, function () {
             if (n) {
               "";
               var e = document.getElementById("GameDiv");
               e && (e.style.backgroundImage = "")
             }
-            cc.loader.onProgress = null, console.log("Success to load scene: " + t)
+            cc.loader.onProgress = null
           })
-        }
-      }), c(o, "returnLanguage", function () {
-        return ("" + window.navigator.language).toLocaleLowerCase()
-      }), c(o, "onErrorHandler", function () {
-        cc.log("\u7f51\u7edc\u9519\u8bef"), this.isBusy = !1, this.perform.target ? this.perform.func.call(this.perform.target, -1) : this.perform.func(-1)
-      }), c(o, "onTimeoutHandler", function () {
-        cc.log("\u8bf7\u6c42\u8d85\u65f6"), this.isBusy = !1, this.perform.target ? this.perform.func.call(this.perform.target, -1) : this.perform.func(-1)
-      }), c(o, "clearAll", function () {
-        for (var e = this.cacheList.length, t = 0; t < e; t++) {
-          var n = this.cacheList[t];
-          n && (n.target ? n.func.call(n.target, -1) : n.func(-1))
-        }
-        this.cacheList.length = 0
-      }), o);
+        }),
+        c(o, "returnLanguage", function () {
+          return ("" + window.navigator.language).toLocaleLowerCase()
+        }),
+        c(o, "onErrorHandler", function () {
+          cc.log("\u7f51\u7edc\u9519\u8bef"), this.isBusy = !1, this.perform.target ? this.perform.func.call(this.perform.target, -1) : this.perform.func(-1)
+        }),
+        c(o, "onTimeoutHandler", function () {
+          cc.log("\u8bf7\u6c42\u8d85\u65f6"), this.isBusy = !1, this.perform.target ? this.perform.func.call(this.perform.target, -1) : this.perform.func(-1)
+        }),
+        c(o, "clearAll", function () {
+          for (var e = this.cacheList.length, t = 0; t < e; t++) {
+            var n = this.cacheList[t];
+            n && (n.target ? n.func.call(n.target, -1) : n.func(-1))
+          }
+          this.cacheList.length = 0
+        }), o);
     t.exports = i, cc._RF.pop()
   }, {
     GameConfig: "GameConfig"
@@ -1770,18 +1752,8 @@ window.__require = function e(t, n, o) {
           o.mainGameJs = this, o.publicGameBool || this.play()
       },
       play: function () {
-        console.log(1);
-        var e = this;
-        // adBreak({
-        //     type: "next",
-        //     name: "restart-game",
-        //     beforeBreak: function() {
-        //         e.enableButtons()
-        //     },
-        //     afterBreak: function() {
-        //         e.enableButtons()
-        //     }
-        // })
+        // var e = this;
+        // console.log("play", e);
       },
       enableButtons: function () { },
       addTouchEvents: function () {
@@ -1816,31 +1788,31 @@ window.__require = function e(t, n, o) {
       gameEnd1: function () {
         var e = this,
           t = this.returnCurrentLanType();
-        1 == t ? (this.gameOverT1.string = "游戏结束", this.gameOverT2.string = "刮开有奖") : 2 == t ? (this.gameOverT1.string = "刮开有奖", this.gameOverT2.string = "刮开有奖") : 4 == t ? (this.gameOverT1.string = "刮开有奖", this.gameOverT2.string = "刮开有奖") : (this.gameOverT1.string = "Game Over", this.gameOverT2.string = "Click to view the score"), this.gameOveEndBool = !0, this.gameOverT1.node.zIndex = 999, this.gameOverT2.node.zIndex = 999, this.gameOverToEnd.zIndex = 999, this.gameOverT1.node.opacity = 0, this.gameOverT1.node.y = 100, this.gameOverToEnd.y = 0, this.gameOverT1.node.runAction(cc.sequence(cc.delayTime(.2), cc.spawn(cc.fadeIn(1), cc.moveBy(1, 0, -50)), cc.delayTime(.3))), this.gameOverToEnd.runAction(cc.sequence(cc.fadeTo(1, 100), cc.callFunc(function () {
+        1 == t ? (this.gameOverT1.string = "游戏结束", this.gameOverT2.string = "刮开有奖") : 2 == t ? (this.gameOverT1.string = "刮开有奖", this.gameOverT2.string = "刮开有奖") : 4 == t ? (this.gameOverT1.string = "刮开有奖", this.gameOverT2.string = "刮开有奖") : (this.gameOverT1.string = "Game Over", this.gameOverT2.string = "Restart"), this.gameOveEndBool = !0, this.gameOverT1.node.zIndex = 999, this.gameOverT2.node.zIndex = 999, this.gameOverToEnd.zIndex = 999, this.gameOverT1.node.opacity = 0, this.gameOverT1.node.y = 100, this.gameOverToEnd.y = 0, this.gameOverT1.node.runAction(cc.sequence(cc.delayTime(.2), cc.spawn(cc.fadeIn(1), cc.moveBy(1, 0, -50)), cc.delayTime(.3))), this.gameOverToEnd.runAction(cc.sequence(cc.fadeTo(1, 100), cc.callFunc(function () {
           e.gameOverToEnd.getComponent(cc.Button).enabled = !0
         }))), this.gameOverT2.node.opacity = 0, this.gameOverT2.node.y = this.gameOverT1.node.y - 100, this.gameOverT2.node.runAction(cc.sequence(cc.delayTime(.2), cc.spawn(cc.fadeIn(1), cc.moveBy(1, 0, -50)), cc.delayTime(.3))), this.gameOverT2.node.runAction(cc.sequence(cc.delayTime(2), cc.scaleTo(.3, 1.2).easing(cc.easeSineInOut()), cc.scaleTo(.3, 1).easing(cc.easeSineInOut()))).repeatForever()
       },
       initEndLayer: function () {
-        this.gameOverT1.node.active = !1, this.gameOverT2.node.active = !1, this.gameOverToEnd.active = !1, o.publicGameBool || adBreak({
-          type: "next",
-          name: "restart-game"
-        }), a.gotoEndLayer1()
+        this.gameOverT1.node.active = !1,
+          this.gameOverT2.node.active = !1,
+          this.gameOverToEnd.active = !1,
+          o.publicGameBool || this.play(),
+          a.gotoEndLayer1()
       },
       start: function () { },
       update: function (e) {
         this.gameOverGoToOVer()
       },
       gameOverGoToOVer: function () {
-        this.gameOveEndBool && (this.gameOverNum++, this.gameOverNum >= 900 && (this.gameOverNum = 0, this.gameOveEndBool = !1))
+        this.gameOveEndBool && (this.gameOverNum++,
+          this.gameOverNum >= 900 && (this.gameOverNum = 0,
+            this.gameOveEndBool = !1))
       },
       SetScore: function (e) {
         o.gameScore = e
       },
       RestartGame: function () {
-        o.GAME_OVER_BOOL = !0, o.gameScore = 0, o.publicGameBool || adBreak({
-          type: "next",
-          name: "restart-game"
-        }), c.loadingScene("MainGameScene")
+        o.GAME_OVER_BOOL = !0, o.gameScore = 0, o.publicGameBool || c.loadingScene("MainGameScene")
       },
       SetGameEndScore: function () {
         a.gameOverShowText(o.gameScore, 1)
@@ -1906,47 +1878,71 @@ window.__require = function e(t, n, o) {
           null != n.Instance && n.Instance.destroy(), n.Instance = this
         }, t.prototype.start = function () {
           var e = this;
-          this.ShowScorePanel(), s.default.Instance.GetLevel() % 5 == 1 ? (this.passlevelYQ = .12, this.lerpCtrl = !0) : s.default.Instance.GetLevel() % 5 == 2 ? (this.passlevelYQ = .31, this.lerpCtrl = !0) : s.default.Instance.GetLevel() % 5 == 3 ? (this.passlevelYQ = .51, this.lerpCtrl = !0) : s.default.Instance.GetLevel() % 5 == 4 ? (this.passlevelYQ = .71, this.lerpCtrl = !0) : s.default.Instance.GetLevel() % 5 == 0 && (this.passlevelYQ = 1, this.lerpCtrl = !0), cc.tween(this.adsButton).call(function () {
-            e.adsButton.children[0].getComponent(cc.Sprite).spriteFrame = u.default.Instance.adsbutton[0]
-          }).delay(.5).call(function () {
-            e.adsButton.children[0].getComponent(cc.Sprite).spriteFrame = u.default.Instance.adsbutton[1]
-          }).delay(.5).union().repeatForever().start()
+          this.ShowScorePanel(), s.default.Instance.GetLevel() % 5 == 1 ? (this.passlevelYQ = .12,
+            this.lerpCtrl = !0) : s.default.Instance.GetLevel() % 5 == 2 ? (this.passlevelYQ = .31,
+              this.lerpCtrl = !0) : s.default.Instance.GetLevel() % 5 == 3 ? (this.passlevelYQ = .51,
+                this.lerpCtrl = !0) : s.default.Instance.GetLevel() % 5 == 4 ? (this.passlevelYQ = .71,
+                  this.lerpCtrl = !0) : s.default.Instance.GetLevel() % 5 == 0 && (this.passlevelYQ = 1,
+                    this.lerpCtrl = !0), cc.tween(this.adsButton).call(function () {
+                      e.adsButton.children[0].getComponent(cc.Sprite).spriteFrame = u.default.Instance.adsbutton[0]
+                    }).delay(.5).call(function () {
+                      e.adsButton.children[0].getComponent(cc.Sprite).spriteFrame = u.default.Instance.adsbutton[1]
+                    }).delay(.5).union().repeatForever().start()
         }, t.prototype.update = function (e) {
-          this.UpdateScoreLabel(e), this.lerpCtrl && this.lerpNumFunc(this.passlevelYQ), this.levelPanel.children[1].getComponent(cc.Label).string = s.default.Instance.GetLevel().toString()
+          this.UpdateScoreLabel(e),
+            this.lerpCtrl && this.lerpNumFunc(this.passlevelYQ),
+            this.levelPanel.children[1].getComponent(cc.Label).string = s.default.Instance.GetLevel().toString()
         }, t.prototype.adsButtonFunc = function () {
-
-          console.log(b.default.Instance.targetFruit.destroy())
-          console.log(b.default.Instance.targetFruit.setPosition(1000, -200))
+          b.default.Instance.targetFruit.setPosition(1000, -200)
+          b.default.Instance.targetFruit.destroy()
           b.default.Instance.createOneFruit(Math.floor(Math.random() * 6))
         }, t.prototype.TestPasslevel = function () {
           var e = this;
-          this.lerpCtrl = !0, this.nowYQ >= this.passlevelYQ && (this.levelPanel.children[2].runAction(cc.sequence(cc.delayTime(1.3), cc.callFunc(function () {
-            e.relerpCtrl = !0, e.lerpCtrl = !1
-          }), cc.callFunc(function () {
-            e.level += 1, e.nowYQ = 0, e.passlevelYQ = 50 * e.level
-          }))), r.default.Instance.Play(0, !1, 1), i.default.Instance.ShootFlower())
+          this.lerpCtrl = !0,
+            this.nowYQ >= this.passlevelYQ && (this.levelPanel.children[2].runAction(cc.sequence(cc.delayTime(1.3), cc.callFunc(function () {
+              e.relerpCtrl = !0, e.lerpCtrl = !1
+            }), cc.callFunc(function () {
+              e.level += 1, e.nowYQ = 0, e.passlevelYQ = 50 * e.level
+            }))), r.default.Instance.Play(0, !1, 1), i.default.Instance.ShootFlower())
         }, t.prototype.showLevelProgressInfo = function () {
-          this.levelPanel.children[1].children[0].getComponent(cc.Label).string = this.level.toString(), this.levelPanel.children[2].children[0].getComponent(cc.Label).string = (this.level + 1).toString(), this.levelPanel.children[1].runAction(cc.sequence(cc.scaleTo(.2, 1.2), cc.scaleTo(.2, 1))), this.levelPanel.children[2].runAction(cc.sequence(cc.scaleTo(.2, 1.2), cc.scaleTo(.2, 1))), this.levelPanel.children[0].children[0].getComponent(cc.Sprite).fillRange = 0, this.lerpCtrl = !1
+          this.levelPanel.children[1].children[0].getComponent(cc.Label).string = this.level.toString(),
+            this.levelPanel.children[2].children[0].getComponent(cc.Label).string = (this.level + 1).toString(),
+            this.levelPanel.children[1].runAction(cc.sequence(cc.scaleTo(.2, 1.2), cc.scaleTo(.2, 1))),
+            this.levelPanel.children[2].runAction(cc.sequence(cc.scaleTo(.2, 1.2), cc.scaleTo(.2, 1))),
+            this.levelPanel.children[0].children[0].getComponent(cc.Sprite).fillRange = 0,
+            this.lerpCtrl = !1
         }, t.prototype.lerpNumFunc = function (e) {
           var t = this.levelProgress.children[0].children[0].getComponent(cc.Sprite).fillRange;
           e > t ? (this.levelProgress.children[0].children[0].getComponent(cc.Sprite).fillRange += .005, (t = this.levelProgress.children[0].children[0].getComponent(cc.Sprite).fillRange) >= e && (this.lerpCtrl = !1)) : (this.levelProgress.children[0].children[0].getComponent(cc.Sprite).fillRange -= .015, (t = this.levelProgress.children[0].children[0].getComponent(cc.Sprite).fillRange) == e && (this.lerpCtrl = !1))
         }, t.prototype.lerpNumFunc1 = function () {
-          this.levelProgress.children[0].children[0].getComponent(cc.Sprite).fillRange -= .03, this.levelProgress.children[0].children[0].getComponent(cc.Sprite).fillRange <= 0 && (this.relerpCtrl = !1, this.showLevelProgressInfo())
+          this.levelProgress.children[0].children[0].getComponent(cc.Sprite).fillRange -= .03,
+            this.levelProgress.children[0].children[0].getComponent(cc.Sprite).fillRange <= 0 && (this.relerpCtrl = !1,
+              this.showLevelProgressInfo())
         }, t.prototype.GuideArrawAction = function () {
-          this.guidePanel.children[0].active = !0, this.guidePanel.children[0].runAction(cc.repeatForever(cc.sequence(cc.fadeIn(.1), cc.moveTo(1, 240, 190), cc.moveTo(.5, 120, 70), cc.fadeOut(.5), cc.moveTo(.01, -240, 190))))
+          this.guidePanel.children[0].active = !0,
+            this.guidePanel.children[0].runAction(cc.repeatForever(cc.sequence(cc.fadeIn(.1), cc.moveTo(1, 240, 190), cc.moveTo(.5, 120, 70), cc.fadeOut(.5), cc.moveTo(.01, -240, 190))))
         }, t.prototype.closeGuide = function () {
           this.guidePanel.children[0].active = !1
         }, t.prototype.SetScoreTween = function (e) {
-          this.targetScore != e && (this.targetScore = e, this.scoreChangeValue = Math.abs(this.targetScore - this.currentScore), this.isScoreChange = !0)
+          this.targetScore != e && (this.targetScore = e,
+            this.scoreChangeValue = Math.abs(this.targetScore - this.currentScore),
+            this.isScoreChange = !0)
         }, t.prototype.UpdateScoreLabel = function (e) {
           if (this.isScoreChange) {
-            this.currentScore += e * this.scoreChangeValue * 5, this.currentScore >= this.targetScore && (this.currentScore = this.targetScore, this.isScoreChange = !1);
+            this.currentScore += e * this.scoreChangeValue * 5,
+              this.currentScore >= this.targetScore && (this.currentScore = this.targetScore,
+                this.isScoreChange = !1);
             var t = Math.floor(this.currentScore);
             this.scoreLabel.string = t.toString()
           }
         }, t.prototype.SetScore = function (e) {
           var t = e.toString().length - 1;
-          this.scoreLabel.node.children[1].x = 60 + 25 * t, e < 1e3 ? (this.scoreLabel.string = String(e), this.scorePanel.children[0].children[0].active = !1, this.scorePanel.children[0].children[1].active = !0) : (this.scoreLabel.string = String(e), this.scoreLabel.node.scale = .7, this.scorePanel.children[0].children[0].active = !1, this.scorePanel.children[0].children[1].active = !0), a.default.score = e
+          this.scoreLabel.node.children[1].x = 60 + 25 * t, e < 1e3 ? (this.scoreLabel.string = String(e),
+            this.scorePanel.children[0].children[0].active = !1,
+            this.scorePanel.children[0].children[1].active = !0) : (this.scoreLabel.string = String(e),
+              this.scoreLabel.node.scale = .7,
+              this.scorePanel.children[0].children[0].active = !1,
+              this.scorePanel.children[0].children[1].active = !0), a.default.score = e
         }, t.prototype.InjuredEffect = function () {
           this.injuredPanel.active = !0, this.injuredPanel.runAction(cc.sequence(cc.fadeTo(.1, 150), cc.fadeTo(.1, 0)))
         }, t.prototype.HideScorePanel = function () {
@@ -2034,7 +2030,7 @@ window.__require = function e(t, n, o) {
             if (a.playNum >= 1) return;
             a.playNum++
           }
-          a.launchScene = e, a.Bros = t, a.caS = n, this.curType = 1, this.getHttpGameId(), this.gamePV_load(), console.log("thisg", this.gameHttpId), o.httpInitUrl(this.gameHttpId), o.send("103", null, this.getLinkGameReturn, this);
+          a.launchScene = e, a.Bros = t, a.caS = n, this.curType = 1, this.getHttpGameId(), this.gamePV_load(), o.httpInitUrl(this.gameHttpId), o.send("103", null, this.getLinkGameReturn, this);
           var c = this.initLanguage();
           this.gameNameText = c.game_name, this.gameInfoText = c.game_info, this.txtStartText = c.txtStart, this.txtMoreText = c.txtMore, this.txtAgainText = c.txtAgain, this.gameEndLText = c.gameEndL, this.gameEndL1Text = c.gameEndL1, this.bgLayRgb = c.bgRgb, this.gameEndName1 = c.gameT2, this.gameEndName2 = c.gameT3, this.gameEndUrl1 = c.gameUrl1, this.gameEndUrl2 = c.gameUrl2, this.langugeType = this.curType
         },
